@@ -1,0 +1,40 @@
+import marcas.*
+import jarras.*
+import personas.*
+import carpas.*
+
+test "test primera parte" 
+{
+	const hofbrau = new Rubia(lupulo = 6, pais = "Alemania", graduacionAlcoholica = 0.08)
+	const jarra1 = new Jarra(capacidad = 0.5, marca = hofbrau)
+	assert.equals(0.04, jarra1.contenidoDeAlcohol())
+	
+	const marco = new Persona(peso = 80, leGustaMusicaTradicional = false, nivelDeAguante = 15)
+	marco.comprarJarra(jarra1)
+	marco.comprarJarra(jarra1)
+	marco.comprarJarra(jarra1)
+	marco.comprarJarra(jarra1)
+	marco.comprarJarra(jarra1)
+	assert.that(marco.estaEbrio())
+	
+	const kevin = new Belga(peso = 64, leGustaMusicaTradicional = true, nivelDeAguante = 10)
+	assert.that(kevin.leGusta(hofbrau))
+	const peter = new Checo(peso = 90, leGustaMusicaTradicional = true, nivelDeAguante = 8)
+	assert.notThat(peter.leGusta(hofbrau))
+	const erika = new Aleman(peso = 54, leGustaMusicaTradicional = false, nivelDeAguante = 10)
+	assert.that(erika.leGusta(hofbrau))
+	
+	///////////////////TESTEOS SEGUNDA PARTE////////////////////////
+	const jarra2 = new Jarra(capacidad = 1.1, marca = hofbrau)
+	kevin.comprarJarra(jarra2)
+	
+	
+	const carpa1 = new Carpa(limite = 30, hayBanda = true, marcaAVender = hofbrau)
+	assert.that(kevin.quiereEntrar(carpa1))
+	assert.that(carpa1.dejaIngresar(kevin))
+	assert.that(kevin.puedeEntrar(carpa1))
+	carpa1.hacerQueIngrese(kevin)
+	carpa1.servirBirraA(kevin, 2)
+	assert.equals(1,carpa1.cantidadDeEbriosEmpedernidos())
+	assert.notThat(kevin.esPatriota())
+}
